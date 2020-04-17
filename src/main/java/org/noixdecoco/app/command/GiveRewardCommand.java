@@ -113,8 +113,6 @@ public class GiveRewardCommand extends RewardCommand {
             }
             
             slackService.sendMessageThread(channel, responseMessage.toString(), false, null, timestamp);
-            coconutsRemaining = coconutService.getCoconutsRemaining(userId);
-            slackService.sendMessage(channel, "You have *" + coconutsRemaining + "* " + emoji + " left to give today.", true, userId);
         }
     }
 }
