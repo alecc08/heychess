@@ -10,11 +10,11 @@ import java.util.List;
 import java.util.function.Predicate;
 
 @Command(EventType.APP_MENTION)
-public class CoconutRankingsCommand extends CoconutCommand {
+public class RewardRankingsCommand extends RewardCommand {
 
     private String channel;
 
-    public CoconutRankingsCommand(String userId, String channel) {
+    public RewardRankingsCommand(String userId, String channel) {
         super(userId);
         this.channel = channel;
     }
@@ -23,8 +23,8 @@ public class CoconutRankingsCommand extends CoconutCommand {
         return r -> r.getEvent().getText() != null && r.getEvent().getText().contains("leaderboard") && r.getEvent().getText().contains("overall");
     }
 
-    public static CoconutCommand build(SlackRequestDTO request) {
-        return new CoconutRankingsCommand(request.getEvent().getUser(), request.getEvent().getChannel());
+    public static RewardCommand build(SlackRequestDTO request) {
+        return new RewardRankingsCommand(request.getEvent().getUser(), request.getEvent().getChannel());
     }
 
     @Override

@@ -10,10 +10,8 @@ import org.apache.logging.log4j.Logger;
 import org.noixdecoco.app.command.annotation.Command;
 import org.noixdecoco.app.data.TimePeriod;
 import org.noixdecoco.app.data.model.CoconutJournal;
-import org.noixdecoco.app.data.model.CoconutLedger;
 import org.noixdecoco.app.dto.EventType;
 import org.noixdecoco.app.dto.SlackRequestDTO;
-import org.springframework.data.domain.Sort;
 import reactor.core.publisher.Flux;
 
 import java.util.*;
@@ -21,14 +19,14 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Command(EventType.APP_MENTION)
-public class CoconutChannelRankingsCommand extends CoconutCommand {
+public class ChannelRankingsCommand extends RewardCommand {
 
-    private static final Logger LOGGER = LogManager.getLogger(CoconutChannelRankingsCommand.class);
+    private static final Logger LOGGER = LogManager.getLogger(ChannelRankingsCommand.class);
 
     private String channel;
     private TimePeriod period;
 
-    public CoconutChannelRankingsCommand(String userId, String channel, TimePeriod period) {
+    public ChannelRankingsCommand(String userId, String channel, TimePeriod period) {
         super(userId);
         this.period = period;
         this.channel = channel;
@@ -38,7 +36,7 @@ public class CoconutChannelRankingsCommand extends CoconutCommand {
         return r -> r.getEvent().getText() != null && r.getEvent().getText().contains("leaderboard") && !r.getEvent().getText().contains("overall");
     }
 
-    public static CoconutCommand build(SlackRequestDTO request) {
+    public static RewardCommand build(SlackRequestDTO request) {
         TimePeriod period = TimePeriod.MONTH;
         if (request.getEvent().getText().contains("yearly")) {
             period = TimePeriod.YEAR;
@@ -48,7 +46,7 @@ public class CoconutChannelRankingsCommand extends CoconutCommand {
             period = TimePeriod.ALL_TIME;
         }
 
-        return new CoconutChannelRankingsCommand(request.getEvent().getUser(), request.getEvent().getChannel(), period);
+        return new ChannelRankingsCommand(request.getEvent().getUser(), request.getEvent().getChannel(), period);
     }
 
     @Override

@@ -12,9 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public abstract class CoconutCommand {
+public abstract class RewardCommand {
 
-    private static final Logger LOGGER = LogManager.getLogger(CoconutCommand.class);
+    private static final Logger LOGGER = LogManager.getLogger(RewardCommand.class);
 
     @Autowired
     protected CoconutService coconutService;
@@ -33,7 +33,7 @@ public abstract class CoconutCommand {
 
     protected String userId;
 
-    protected CoconutCommand(String userId) {
+    protected RewardCommand(String userId) {
         this.userId = userId;
     }
 

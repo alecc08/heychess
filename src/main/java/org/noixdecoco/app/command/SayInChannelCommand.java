@@ -2,21 +2,14 @@ package org.noixdecoco.app.command;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.noixdecoco.app.GlobalConfig;
 import org.noixdecoco.app.command.annotation.Command;
 import org.noixdecoco.app.dto.EventType;
 import org.noixdecoco.app.dto.SlackRequestDTO;
-import org.noixdecoco.app.exception.CoconutException;
-import org.noixdecoco.app.exception.InsufficientCoconutsException;
-import org.noixdecoco.app.exception.InvalidReceiverException;
-import org.springframework.util.StringUtils;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.function.Predicate;
 
 @Command(value = EventType.MESSAGE, adminOnly = true)
-public class SayInChannelCommand extends CoconutCommand {
+public class SayInChannelCommand extends RewardCommand {
 
     private static final Logger LOGGER = LogManager.getLogger(SayInChannelCommand.class);
 
@@ -44,7 +37,7 @@ public class SayInChannelCommand extends CoconutCommand {
         };
     }
 
-    public static CoconutCommand build(SlackRequestDTO request) {
+    public static RewardCommand build(SlackRequestDTO request) {
         String message = extractMessage(request.getEvent().getText());
         String channel = extractChannel(request.getEvent().getText());
         return new SayInChannelCommand(request.getEvent().getUser(), message, channel, request.getEvent().getTs());

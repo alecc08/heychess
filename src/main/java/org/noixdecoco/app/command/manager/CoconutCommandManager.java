@@ -2,7 +2,7 @@ package org.noixdecoco.app.command.manager;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.noixdecoco.app.command.CoconutCommand;
+import org.noixdecoco.app.command.RewardCommand;
 import org.noixdecoco.app.command.annotation.Command;
 import org.noixdecoco.app.dto.EventType;
 import org.noixdecoco.app.dto.SlackRequestDTO;
@@ -64,14 +64,14 @@ public class CoconutCommandManager {
         ALL_COMMANDS.get(event).put(predicate, commandBuilderMethod);
     }
 
-    public CoconutCommand buildFromRequest(SlackRequestDTO request) {
-        CoconutCommand command = null;
+    public RewardCommand buildFromRequest(SlackRequestDTO request) {
+        RewardCommand command = null;
         if (request != null && request.getEvent() != null) {
             Map<Predicate<SlackRequestDTO>, Method> commands = ALL_COMMANDS.get(EventType.fromString(request.getEvent().getType()));
             for (Map.Entry<Predicate<SlackRequestDTO>, Method> entry : commands.entrySet()) {
                 if (entry.getKey().test(request)) {
                     try {
-                        command = (CoconutCommand) entry.getValue().invoke(null, request);
+                        command = (RewardCommand) entry.getValue().invoke(null, request);
                         beanFactory.autowireBean(command);
                         break;
                     } catch (IllegalAccessException | InvocationTargetException e) {

@@ -10,9 +10,9 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 @Command(EventType.REACTION_ADDED)
-public class CoconutReactionCommand extends GiveCoconutCommand {
+public class RewardReactionCommand extends GiveRewardCommand {
 
-    protected CoconutReactionCommand(String giver, Set<String> receivers, String channel, String timestamp, int coconutCount) {
+    protected RewardReactionCommand(String giver, Set<String> receivers, String channel, String timestamp, int coconutCount) {
         super(giver, "(from a reaction)", receivers, channel, timestamp, coconutCount);
     }
 
@@ -20,10 +20,10 @@ public class CoconutReactionCommand extends GiveCoconutCommand {
         return r -> r.getEvent().getReaction().equalsIgnoreCase(GlobalConfig.emoji) && r.getEvent().getItemUser() != null;
     }
 
-    public static CoconutCommand build(SlackRequestDTO request) {
+    public static RewardCommand build(SlackRequestDTO request) {
         int coconutsToGive = 1;
         Set<String> receivers = new HashSet<>(1);
         receivers.add(request.getEvent().getItemUser());
-        return new CoconutReactionCommand(request.getEvent().getUser(), receivers, request.getEvent().getItem().getChannel(), request.getEvent().getItem().getTs(), coconutsToGive);
+        return new RewardReactionCommand(request.getEvent().getUser(), receivers, request.getEvent().getItem().getChannel(), request.getEvent().getItem().getTs(), coconutsToGive);
     }
 }

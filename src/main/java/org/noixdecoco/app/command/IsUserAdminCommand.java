@@ -7,7 +7,7 @@ import org.noixdecoco.app.dto.SlackRequestDTO;
 import java.util.function.Predicate;
 
 @Command(EventType.APP_MENTION)
-public class IsUserAdminCommand extends CoconutCommand {
+public class IsUserAdminCommand extends RewardCommand {
 
     private String channel;
 
@@ -20,7 +20,7 @@ public class IsUserAdminCommand extends CoconutCommand {
         return r -> r.getEvent().getText() != null && r.getEvent().getText().toLowerCase().contains("am i admin");
     }
 
-    public static CoconutCommand build(SlackRequestDTO request) {
+    public static RewardCommand build(SlackRequestDTO request) {
         return new IsUserAdminCommand(request.getEvent().getUser(), request.getEvent().getChannel());
     }
 

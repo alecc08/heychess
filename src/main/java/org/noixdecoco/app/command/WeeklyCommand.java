@@ -8,7 +8,6 @@ import org.noixdecoco.app.dto.SlackRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 
-import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -17,7 +16,7 @@ import java.util.function.Predicate;
 import static java.util.stream.Collectors.toMap;
 
 @Command(EventType.APP_MENTION)
-public class WeeklyCommand extends CoconutCommand {
+public class WeeklyCommand extends RewardCommand {
 
     private String channel;
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -41,7 +40,7 @@ public class WeeklyCommand extends CoconutCommand {
         return r -> r.getEvent().getText() != null && r.getEvent().getText().contains("weekly report");
     }
 
-    public static CoconutCommand build(SlackRequestDTO request) {
+    public static RewardCommand build(SlackRequestDTO request) {
         return new WeeklyCommand(request.getEvent().getChannel());
     }
 

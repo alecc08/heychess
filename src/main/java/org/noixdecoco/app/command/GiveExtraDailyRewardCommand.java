@@ -11,7 +11,7 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 @Command(value = EventType.MESSAGE, adminOnly = true)
-public class GiveExtraDailyCoconutCommand extends CoconutCommand {
+public class GiveExtraDailyRewardCommand extends RewardCommand {
 
     protected Set<String> receivers;
     protected int coconutCount;
@@ -19,7 +19,7 @@ public class GiveExtraDailyCoconutCommand extends CoconutCommand {
     protected String emoji = GlobalConfig.emoji;
     protected static final String TAG_START = "<@";
 
-    protected GiveExtraDailyCoconutCommand(String giver, Set<String> receivers, String channel, int coconutCount) {
+    protected GiveExtraDailyRewardCommand(String giver, Set<String> receivers, String channel, int coconutCount) {
         super(giver);
         this.receivers = receivers;
         this.channel = channel;
@@ -38,10 +38,10 @@ public class GiveExtraDailyCoconutCommand extends CoconutCommand {
         };
     }
 
-    public static CoconutCommand build(SlackRequestDTO request) {
+    public static RewardCommand build(SlackRequestDTO request) {
         int coconutsToGive = extractNumberOfCoconuts(request.getEvent().getText());
         Set<String> receivers = extractTaggedUsers(request.getEvent().getText());
-        return new GiveExtraDailyCoconutCommand(request.getEvent().getUser(), receivers, request.getEvent().getChannel(), coconutsToGive);
+        return new GiveExtraDailyRewardCommand(request.getEvent().getUser(), receivers, request.getEvent().getChannel(), coconutsToGive);
     }
 
     private static int extractNumberOfCoconuts(String message) {

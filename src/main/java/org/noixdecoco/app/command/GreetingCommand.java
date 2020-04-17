@@ -1,12 +1,11 @@
 package org.noixdecoco.app.command;
 
-import org.noixdecoco.app.dto.EventType;
 import org.noixdecoco.app.dto.SlackRequestDTO;
 
 import java.util.function.Predicate;
 
 //@Command(EventType.MEMBER_JOINED_CHANNEL)
-public class GreetingCommand extends CoconutCommand {
+public class GreetingCommand extends RewardCommand {
 
     private String channel;
 
@@ -19,7 +18,7 @@ public class GreetingCommand extends CoconutCommand {
         return r -> true;
     }
 
-    public static CoconutCommand build(SlackRequestDTO request) {
+    public static RewardCommand build(SlackRequestDTO request) {
         return new GreetingCommand(request.getEvent().getUser(), request.getEvent().getChannel());
     }
 

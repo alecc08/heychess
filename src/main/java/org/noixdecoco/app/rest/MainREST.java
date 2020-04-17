@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.EvictingQueue;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.noixdecoco.app.command.CoconutCommand;
+import org.noixdecoco.app.command.RewardCommand;
 import org.noixdecoco.app.command.manager.CoconutCommandManager;
 import org.noixdecoco.app.dto.SlackRequestDTO;
 import org.noixdecoco.app.utils.SlackSignatureUtil;
@@ -52,7 +52,7 @@ public class MainREST {
             // Add eventId to treatedEventIds to prevent reprocessing
             treatedEventIds.add(request.getEventId());
             LOGGER.info(request.toString());
-            CoconutCommand command = commandHelper.buildFromRequest(request);
+            RewardCommand command = commandHelper.buildFromRequest(request);
             if (command != null) {
                 command.execute();
             }

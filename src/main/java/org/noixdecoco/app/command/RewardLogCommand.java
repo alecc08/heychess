@@ -12,9 +12,9 @@ import java.util.List;
 import java.util.function.Predicate;
 
 @Command(value = EventType.MESSAGE, adminOnly = true)
-public class CoconutLogCommand extends CoconutCommand {
+public class RewardLogCommand extends RewardCommand {
 
-    private static final Logger LOGGER = LogManager.getLogger(CoconutLogCommand.class);
+    private static final Logger LOGGER = LogManager.getLogger(RewardLogCommand.class);
 
     protected String channel;
     protected String timestamp;
@@ -22,7 +22,7 @@ public class CoconutLogCommand extends CoconutCommand {
     protected int total = 20;
     protected int offset = 0;
 
-    protected CoconutLogCommand(String giver, String message, String channel, String timestamp, int total, int offset) {
+    protected RewardLogCommand(String giver, String message, String channel, String timestamp, int total, int offset) {
         super(giver);
         this.channel = channel;
         this.message = message;
@@ -43,10 +43,10 @@ public class CoconutLogCommand extends CoconutCommand {
         };
     }
 
-    public static CoconutCommand build(SlackRequestDTO request) {
+    public static RewardCommand build(SlackRequestDTO request) {
         int total = extractTotal(request.getEvent().getText());
         int offset = extractOffset(request.getEvent().getText());
-        return new CoconutLogCommand(request.getEvent().getUser(), null, request.getEvent().getChannel(), request.getEvent().getTs(), total, offset);
+        return new RewardLogCommand(request.getEvent().getUser(), null, request.getEvent().getChannel(), request.getEvent().getTs(), total, offset);
     }
 
     private static int extractTotal(String message) {

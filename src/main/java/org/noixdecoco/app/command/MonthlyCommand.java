@@ -6,7 +6,6 @@ import org.noixdecoco.app.data.repository.CoconutJournalRepository;
 import org.noixdecoco.app.dto.EventType;
 import org.noixdecoco.app.dto.SlackRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -19,7 +18,7 @@ import java.util.function.Predicate;
 import static java.util.stream.Collectors.toMap;
 
 @Command(EventType.APP_MENTION)
-public class MonthlyCommand extends CoconutCommand {
+public class MonthlyCommand extends RewardCommand {
 
     private String channel;
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -40,7 +39,7 @@ public class MonthlyCommand extends CoconutCommand {
         return r -> r.getEvent().getText() != null && r.getEvent().getText().contains("monthly");
     }
 
-    public static CoconutCommand build(SlackRequestDTO request) {
+    public static RewardCommand build(SlackRequestDTO request) {
         return new MonthlyCommand(request.getEvent().getChannel());
     }
 

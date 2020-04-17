@@ -1,18 +1,15 @@
 package org.noixdecoco.app.command;
 
-import org.noixdecoco.app.GlobalConfig;
 import org.noixdecoco.app.command.annotation.Command;
 import org.noixdecoco.app.dto.ChannelDTO;
 import org.noixdecoco.app.dto.ChannelListDTO;
 import org.noixdecoco.app.dto.EventType;
 import org.noixdecoco.app.dto.SlackRequestDTO;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.function.Predicate;
 
 @Command(value = EventType.MESSAGE, adminOnly = true)
-public class ListJoinedChannelsCommand extends CoconutCommand {
+public class ListJoinedChannelsCommand extends RewardCommand {
 
     protected String channel;
 
@@ -33,7 +30,7 @@ public class ListJoinedChannelsCommand extends CoconutCommand {
         };
     }
 
-    public static CoconutCommand build(SlackRequestDTO request) {
+    public static RewardCommand build(SlackRequestDTO request) {
         return new ListJoinedChannelsCommand(request.getEvent().getUser(), request.getEvent().getChannel());
     }
 

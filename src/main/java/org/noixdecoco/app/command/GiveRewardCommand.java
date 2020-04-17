@@ -16,9 +16,9 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 @Command(EventType.MESSAGE)
-public class GiveCoconutCommand extends CoconutCommand {
+public class GiveRewardCommand extends RewardCommand {
 
-    private static final Logger LOGGER = LogManager.getLogger(GiveCoconutCommand.class);
+    private static final Logger LOGGER = LogManager.getLogger(GiveRewardCommand.class);
 
     protected Set<String> receivers;
     protected int coconutCount;
@@ -28,7 +28,7 @@ public class GiveCoconutCommand extends CoconutCommand {
     protected String emoji = GlobalConfig.emoji;
     protected static final String TAG_START = "<@";
 
-    protected GiveCoconutCommand(String giver, String message, Set<String> receivers, String channel, String timestamp, int coconutCount) {
+    protected GiveRewardCommand(String giver, String message, Set<String> receivers, String channel, String timestamp, int coconutCount) {
         super(giver);
         this.receivers = receivers;
         this.channel = channel;
@@ -49,10 +49,10 @@ public class GiveCoconutCommand extends CoconutCommand {
         };
     }
 
-    public static CoconutCommand build(SlackRequestDTO request) {
+    public static RewardCommand build(SlackRequestDTO request) {
         int coconutsToGive = extractNumberOfCoconuts(request.getEvent().getText());
         Set<String> receivers = extractTaggedUsers(request.getEvent().getText());
-        return new GiveCoconutCommand(request.getEvent().getUser(), request.getEvent().getText(), receivers, request.getEvent().getChannel(), request.getEvent().getTs(), coconutsToGive);
+        return new GiveRewardCommand(request.getEvent().getUser(), request.getEvent().getText(), receivers, request.getEvent().getChannel(), request.getEvent().getTs(), coconutsToGive);
     }
 
     private static int extractNumberOfCoconuts(String message) {

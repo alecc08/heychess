@@ -18,7 +18,7 @@ import java.util.function.Predicate;
 import static java.util.stream.Collectors.toMap;
 
 @Command(EventType.APP_MENTION)
-public class YearlyCommand extends CoconutCommand {
+public class YearlyCommand extends RewardCommand {
 
     private String channel;
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -39,7 +39,7 @@ public class YearlyCommand extends CoconutCommand {
         return r -> r.getEvent().getText() != null && r.getEvent().getText().contains("yearly report");
     }
 
-    public static CoconutCommand build(SlackRequestDTO request) {
+    public static RewardCommand build(SlackRequestDTO request) {
         return new YearlyCommand(request.getEvent().getChannel());
     }
 

@@ -8,14 +8,14 @@ import org.springframework.beans.factory.annotation.Value;
 import java.util.function.Predicate;
 
 @Command(EventType.APP_MENTION)
-public class CoconutTutorialCommand extends CoconutCommand {
+public class RewardTutorialCommand extends RewardCommand {
 
     private String channel;
 
     @Value("${tutorial.message}")
     private String tutorialMessage;
 
-    public CoconutTutorialCommand(String userId, String channel) {
+    public RewardTutorialCommand(String userId, String channel) {
         super(userId);
         this.channel = channel;
     }
@@ -32,8 +32,8 @@ public class CoconutTutorialCommand extends CoconutCommand {
         };
     }
 
-    public static CoconutCommand build(SlackRequestDTO request) {
-        return new CoconutTutorialCommand(request.getEvent().getUser(), request.getEvent().getChannel());
+    public static RewardCommand build(SlackRequestDTO request) {
+        return new RewardTutorialCommand(request.getEvent().getUser(), request.getEvent().getChannel());
     }
 
     @Override
