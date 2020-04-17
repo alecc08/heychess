@@ -46,10 +46,6 @@ public class CoconutServiceImpl implements CoconutService {
 
         CoconutLedger giversLedger = getLedger(fromUser);
 
-        if (giversLedger.getCoconutsGiven() + numCoconuts > dailyLimit) {
-            throw new InsufficientCoconutsException();
-        }
-
         giversLedger.setCoconutsGiven(giversLedger.getCoconutsGiven() + numCoconuts);
         LocalDateTime now = LocalDateTime.now();
         giversLedger.setLastCoconutGivenAt(now);
@@ -59,7 +55,7 @@ public class CoconutServiceImpl implements CoconutService {
 
         CoconutLedger receiver = getLedger(toUser);
         receiver.setNumberOfCoconuts(receiver.getNumberOfCoconuts() + numCoconuts);
-        LOGGER.info(receiver.getUsername() + " now has " + receiver.getNumberOfCoconuts() + " coconut(s)");
+        LOGGER.info(receiver.getUsername() + " now has " + receiver.getNumberOfCoconuts() + " chess piece(s)");
         coconutRepo.save(receiver).subscribe();
         return receiver.getNumberOfCoconuts();
     }
@@ -76,7 +72,7 @@ public class CoconutServiceImpl implements CoconutService {
     public void addCoconut(String toUser, int numCoconuts) {
         CoconutLedger ledger = getLedger(toUser);
         ledger.setNumberOfCoconuts(ledger.getNumberOfCoconuts() + numCoconuts);
-        LOGGER.info(ledger.getUsername() + " now has " + ledger.getNumberOfCoconuts() + " coconut(s)");
+        LOGGER.info(ledger.getUsername() + " now has " + ledger.getNumberOfCoconuts() + " chess piece(s)");
         coconutRepo.save(ledger).subscribe();
     }
 

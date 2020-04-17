@@ -15,7 +15,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Predicate;
 
-@Command(EventType.MESSAGE)
+@Command(value = EventType.MESSAGE, adminOnly = true)
 public class GiveRewardCommand extends RewardCommand {
 
     private static final Logger LOGGER = LogManager.getLogger(GiveRewardCommand.class);
@@ -81,15 +81,8 @@ public class GiveRewardCommand extends RewardCommand {
     protected void performAction() {
         StringBuilder responseMessage = new StringBuilder();
         String giver = "<@" + userId + ">";
-        int coconutsRemaining = coconutService.getCoconutsRemaining(userId);
-        LOGGER.info(userId + " has " + coconutsRemaining + " coconuts left to give today.");
-        String emojiPlural = emoji + (coconutCount > 0 ? "s" : "");
-        if(coconutCount > coconutsRemaining) {
-            LOGGER.info(coconutsRemaining + " is less than " + coconutCount);
-            slackService.sendMessage(channel, "You tried giving " + coconutCount + " " + emojiPlural + " but you have *"
-                    + (coconutsRemaining > 0 ? coconutsRemaining : "no") + "* " + emojiPlural + " left to give today.", true, userId);
-            slackService.addReaction(this.channel, this.timestamp, "heavy_multiplication_x");
-        } else if(receivers.size() > 1 && (coconutCount / receivers.size() < 1)) {
+        String emojiPlural = "chess piece(s)";
+        if(receivers.size() > 1 && (coconutCount / receivers.size() < 1)) {
             slackService.sendMessage(channel, "Not enough " + emojiPlural + " to split between " + receivers.size() + " people.",true, userId);
             slackService.addReaction(this.channel, this.timestamp, "heavy_multiplication_x");
         } else {
@@ -106,11 +99,6 @@ public class GiveRewardCommand extends RewardCommand {
                     slackService.sendMessage(name, giver + " has given you " + coconutCount + " " + emojiPlural + " In <#" + channel + ">. \n`"
                             + message + "`\n You now have *" + (numCoconuts > 0 ? numCoconuts : "no") + "* "+ emojiPlural +".");
 
-                    coconutsRemaining = coconutService.getCoconutsRemaining(userId);
-
-                    // Message giver
-                    slackService.sendMessage(userId, "You have given <@" + name + "> " + coconutCount + " " + emojiPlural + " In <#" + channel + ">. Reason:\n`"
-                            + message + "`\n You have *" + coconutsRemaining + "* "+ emojiPlural +" left to give today.");
                     slackService.addReaction(this.channel, this.timestamp, "heavy_check_mark");
                 } catch (InsufficientCoconutsException e) {
                     responseMessage.append(giver + " didn't have enough "+ emoji +"s remaining for <@" + name + "> :sob:");
