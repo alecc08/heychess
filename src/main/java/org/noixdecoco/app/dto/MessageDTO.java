@@ -14,7 +14,7 @@ public class MessageDTO implements SlackDTO {
     private String threadTs;
 
     @JsonProperty("as_user")
-    private Boolean asUser = Boolean.TRUE;
+    private Boolean asUser = Boolean.FALSE;
 
     public String getText() {
         return text;
