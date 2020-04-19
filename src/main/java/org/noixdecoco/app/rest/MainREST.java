@@ -42,6 +42,7 @@ public class MainREST {
     @PostMapping("/event")
     public synchronized Flux<SlackRequestDTO> receiveEvent(@RequestHeader HttpHeaders headers, @RequestBody String bodyString, HttpServletResponse response) {
         SlackRequestDTO request = extractRequestFromBody(bodyString);
+        LOGGER.info("Received EVENT:" + request.toString());
         if (request == null) {
             response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             return Flux.empty();
