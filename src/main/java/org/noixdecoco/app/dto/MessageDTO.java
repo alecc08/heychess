@@ -29,14 +29,6 @@ public class MessageDTO implements SlackDTO {
         this.channel = channel;
     }
 
-    public Boolean getAsUser() {
-        return asUser;
-    }
-
-    public void setAsUser(Boolean asUser) {
-        this.asUser = asUser;
-    }
-
     public String getUser() {
         return user;
     }
