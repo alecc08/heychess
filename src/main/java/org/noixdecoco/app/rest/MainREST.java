@@ -39,6 +39,11 @@ public class MainREST {
         treatedEventIds = EvictingQueue.create(EVENT_ID_QUEUE_SIZE);
     }
 
+    @GetMapping("/")
+    public String hello() {
+        return "Hi friend!";
+    }
+
     @PostMapping("/event")
     public synchronized Flux<SlackRequestDTO> receiveEvent(@RequestHeader HttpHeaders headers, @RequestBody String bodyString, HttpServletResponse response) {
         SlackRequestDTO request = extractRequestFromBody(bodyString);
